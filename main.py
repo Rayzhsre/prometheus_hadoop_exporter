@@ -9,12 +9,13 @@ from metrics import RManager, NamenodeJMX
 from flask import Response, Flask
 import json
 
-
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
     return 'prometheus hadoop exporter'
+
 
 @app.route("/metrics")
 def hadoopResponse():
@@ -36,7 +37,7 @@ def hadoopResponse():
     fstotal.set(json.loads(nnjmx.nnfssystem())['fstotal'])
 
     return Response(generate_latest(REGISTRY), mimetype="text/plain")
-    
+
 
 if __name__ == '__main__':
     REGISTRY = CollectorRegistry(auto_describe=False)
